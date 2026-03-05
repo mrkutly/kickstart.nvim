@@ -69,6 +69,7 @@ Kickstart Guide:
   I have left several `:help X` comments throughout the init.lua
     These are hints about where to find more information about the relevant settings,
     plugins or Neovim features used in Kickstart.
+  
 
    NOTE: Look for lines like this
 
@@ -213,7 +214,10 @@ vim.keymap.set('n', '<leader>jt', function()
 end, { desc = 'Open a terminal window' })
 
 -- add a keybind to run sbpd in our baby terminal
-vim.keymap.set('n', '<leader>jp', function() vim.fn.chansend(job_id, { 'sbpd\r\n' }) end, { desc = 'SafeBase prepare dev' })
+vim.keymap.set('n', '<leader>jp', function() vim.fn.chansend(job_id, { 'sbpd\r\n' }) end, { desc = 'SafeBase [p]repare dev' })
+vim.keymap.set('n', '<leader>ja', function() vim.fn.chansend(job_id, { 'ai\r\n' }) end, { desc = '[A]I commit and Jira ticket' })
+vim.keymap.set('n', '<leader>jg', function() vim.fn.chansend(job_id, { 'pr\r\n' }) end, { desc = 'Open PR in [G]ithub' })
+
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -940,7 +944,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
