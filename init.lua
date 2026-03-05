@@ -201,6 +201,19 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- create a baby terminal like in vscode
+local job_id = 0
+vim.keymap.set('n', '<leader>jt', function()
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd 'J'
+  vim.api.nvim_win_set_height(0, 13)
+
+  job_id = vim.bo.channel
+end, { desc = 'Open a terminal window' })
+
+-- add a keybind to run sbpd in our baby terminal
+vim.keymap.set('n', '<leader>jp', function() vim.fn.chansend(job_id, { 'sbpd\r\n' }) end, { desc = 'SafeBase prepare dev' })
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -328,6 +341,7 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>j', group = 'Terminal', mode = { 'n' } },
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
       },
     },
