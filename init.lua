@@ -96,7 +96,7 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -347,6 +347,7 @@ require('lazy').setup({
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>j', group = 'Terminal', mode = { 'n' } },
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
+        { '<leader>r', group = '[R]un tests', mode = { 'n' } },
       },
     },
   },
@@ -732,6 +733,9 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
@@ -845,7 +849,9 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+      vim.o.background = 'dark' -- or "light"
       vim.cmd.colorscheme 'tokyonight-night'
+      vim.o.syntax = 'enable'
     end,
   },
 
