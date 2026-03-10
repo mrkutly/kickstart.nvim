@@ -280,7 +280,11 @@ require('lazy').setup({
   {
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {},
+    opts = {
+      settings = {
+        expose_as_code_action = 'all',
+      },
+    },
   },
   { 'NMAC427/guess-indent.nvim', opts = {} },
 
@@ -587,6 +591,8 @@ require('lazy').setup({
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
           map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
+          map('grk', vim.lsp.buf.hover, 'Show type info')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
@@ -909,7 +915,7 @@ require('lazy').setup({
     branch = 'main',
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
-      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'ruby', 'typescript', 'tsx', 'vim', 'vimdoc' }
       require('nvim-treesitter').install(parsers)
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
