@@ -277,15 +277,15 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
-  {
-    'pmizio/typescript-tools.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {
-      settings = {
-        expose_as_code_action = 'all',
-      },
-    },
-  },
+  -- {
+  -- 'pmizio/typescript-tools.nvim',
+  -- dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+  -- opts = {
+  --  settings = {
+  --  expose_as_code_action = 'all',
+  --  },
+  --  },
+  -- },
   { 'NMAC427/guess-indent.nvim', opts = {} },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
@@ -425,7 +425,7 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
-        -- pickers = {}
+        -- pickers = {},
         extensions = {
           ['ui-select'] = { require('telescope.themes').get_dropdown() },
         },
@@ -438,6 +438,7 @@ require('lazy').setup({
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       local multigrep = require 'config.telescope.multigrep'
+      vim.keymap.set('n', '<leader>sa', function(...) builtin.find_files { ..., hidden = true } end, { desc = '[S]earch [A]ll (including dotfiles)' })
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
@@ -647,10 +648,18 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
-
+        ts_ls = { filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' } },
+        prismals = {},
+        ruby_lsp = {},
         stylua = {}, -- Used to format Lua code
-
+        graphql = {
+          cmd = { 'graphql-lsp', 'server', '-m', 'stream' },
+          filetypes = { 'graphql', 'typescriptreact', 'javascriptreact' },
+          root_dir = function(bufnr, on_dir)
+            local fname = vim.api.nvim_buf_get_name(bufnr)
+            on_dir(require('lspconfig.util').root_pattern('.graphqlrc*', '.graphql.config.*', 'graphql.config.*')(fname))
+          end,
+        },
         -- Special Lua Config, as recommended by neovim help docs
         lua_ls = {
           on_init = function(client)
