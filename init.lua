@@ -708,6 +708,11 @@ require('lazy').setup({
         vim.lsp.config(name, server)
         vim.lsp.enable(name)
       end
+
+      -- set vim to use lsp for code folding
+      vim.o.foldmethod = 'expr'
+      vim.o.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+      vim.opt.foldlevelstart = 99
     end,
   },
 
