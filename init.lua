@@ -648,13 +648,31 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ts_ls = { filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' } },
+        -- ts_ls = { filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' } },
+        tsgo = {
+          cmd = { 'tsgo', '--lsp', '--stdio' },
+          filetypes = {
+            'javascript',
+            'javascriptreact',
+            'javascript.jsx',
+            'typescript',
+            'typescriptreact',
+            'typescript.tsx',
+          },
+          root_markers = {
+            'tsconfig.json',
+            'jsconfig.json',
+            'package.json',
+            '.git',
+            'tsconfig.base.json',
+          },
+        },
         prismals = {},
         ruby_lsp = {},
         stylua = {}, -- Used to format Lua code
         graphql = {
           cmd = { 'graphql-lsp', 'server', '-m', 'stream' },
-          filetypes = { 'graphql', 'typescriptreact', 'javascriptreact' },
+          filetypes = { 'graphql' },
           root_dir = function(bufnr, on_dir)
             local fname = vim.api.nvim_buf_get_name(bufnr)
             on_dir(require('lspconfig.util').root_pattern('.graphqlrc*', '.graphql.config.*', 'graphql.config.*')(fname))
